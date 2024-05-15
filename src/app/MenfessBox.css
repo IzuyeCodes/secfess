@@ -1,0 +1,14 @@
+/* MenfessBox.css */
+.skeleton-loading {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.skeleton-line {
+    height: 20px;
+    width: 100%;
+    background-color: #ccc; /* Adjust color as needed */
+    border-radius: 4px;
+}
+
