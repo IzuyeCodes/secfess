@@ -10,17 +10,21 @@ import "react-toastify/dist/ReactToastify.css";
 import Header from "@/app/Header";
 import url from "url";
 import Grbf from "@/app/xx";
-
+import { motion } from 'framer-motion';
+import Page_registered from "@/app/Components/page_registered";
+import RegisterForm from "@/app/Components/RegisterForm";
 
 export default function Home() {
-  useEffect(() => {
-    // Mengatur judul halaman
-  }, []);
 
-  const [nama, setNama] = useState("");
+  const [username, setUsername] = useState("");
   const [pesan, setPesan] = useState("");
   const [fessData, setFessData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isRegistering, setIsRegistering] = useState(false)
+
+  const [isRegistered, setIsRegistered] = useState(false)
+  console.log(isRegistered)
+  // localStorage.setItem("sid" , "123")
 
   const resetForm = () => {
     setNama("");
@@ -57,23 +61,32 @@ export default function Home() {
     }
   }
 
-  // useEffect(() => {
-  //   if (!fessData) {
-  //     getData();
-  //     console.log("Get data ok")
-  //     setLoading(false)
-  //   }
-  // }, [fessData]);
+  // localStorage.setItem("sid", "keke");
+  const checkRegistered = async () => {
+    const SID = localStorage.getItem("sid" || null)
+    console.log(SID)
+    if (SID != null) {
+      try {
+        const res = await axios.post(`${window.location.href}/api/checkUser`, {
+          sid: SID
+        });
+        // console.log(res.data)
+        setIsRegistered(true);
+        setUsername(res.data.data)
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  }
+
+  useEffect(() => {
+    checkRegistered()
+  }, []);
 
   const style_mainContainer = {
     backgroundColor: "black",
   };
   const style_boxMenfessData = {
-    borderRadius: "20px",
-    background: "#ffffff",
-    // boxShadow: "5px 5px 10px #c4c4c4, -5px -5px 10px #c4c4c4",
-  };
-  const style_boxForms = {
     borderRadius: "20px",
     background: "#ffffff",
     // boxShadow: "5px 5px 10px #c4c4c4, -5px -5px 10px #c4c4c4",
@@ -86,89 +99,85 @@ export default function Home() {
   };
   // End Styling
 
-  return (
+
+  return isRegistered ? (
       <>
         <Helmet>
           <title>Fess</title>
-          <meta name="description" content="Fess made by Izuye" />
-          <meta property="og:title" content="Fess" />
-          <meta property="og:description" content="Just say it" />
-          <meta property="og:image" content="https://media.tenor.com/a7qa0Uk3F30AAAAi/peach-goma-peach-and-goma.gif" />
-          <meta property="og:url" content="https://w.izuye.my.id/Fess" />
-          <meta property="og:type" content="website" />
+          <meta name="description" content="Fess made by Izuye"/>
+          <meta property="og:title" content="Fess"/>
+          <meta property="og:description" content="Just say it"/>
+          <meta property="og:image" content="https://media.tenor.com/a7qa0Uk3F30AAAAi/peach-goma-peach-and-goma.gif"/>
+          <meta property="og:url" content="https://w.izuye.my.id/Fess"/>
+          <meta property="og:type" content="website"/>
         </Helmet>
-        <Header />
-        <div
-            className="bg-slate-200 min-h-screen flex flex-col items-center justify-center main-container"
-            style={style_mainContainer}
-        >
+        <Header/>
+        <Page_registered data={ username } />
+</>
+    ) : (
+        <>
+          <Helmet>
+            <title>Fess</title>
+            <meta name="description" content="Fess made by Izuye" />
+            <meta property="og:title" content="Fess" />
+            <meta property="og:description" content="Just say it" />
+            <meta property="og:image" content="https://media.tenor.com/a7qa0Uk3F30AAAAi/peach-goma-peach-and-goma.gif" />
+            <meta property="og:url" content="https://w.izuye.my.id/Fess" />
+            <meta property="og:type" content="website" />
+          </Helmet>
+          <Header />
           <div
-              className="text-black font-bold text-4xl tracking-wide subpixel-antialiased mb-6 mt-10 headtext"
-          >
-            Say <span style={{backgroundColor: "#00ff62", color: "black"}}> anything</span> to me
-          </div>
-
-          <div
-              className="container mx-auto bg-slate-300 p-6 rounded-lg shadow-lg max-w-md"
-              style={style_boxForms}
+              className="bg-slate-200 min-h-screen min-w-screen flex flex-col items-center justify-center main-container"
+              style={style_mainContainer}
           >
 
-            <h2 className="text-2xl font-bold text-gray-800 mb-4"></h2>
-            <form className="flex flex-col" onSubmit={handleKirim}>
-              <input placeholder="Anonym Name"
-                     className="bg-gray-100 text-gray-800 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
-                     type="text"
-                     onChange={(e) => setNama(e.target.value)}
-                     required={true}
-                     value={nama}
-              />
-              <textarea placeholder="Pesan"
-                        className="bg-gray-100 text-gray-800 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150 h-24"
-                        name="pesan"
-                        onChange={(e) => setPesan(e.target.value)}
-                        required={true}
-                        value={pesan}
-              ></textarea>
+            <div className="items-center justify-center min-w-80">
+              <div
+                  className="text-black font-bold text-5xl tracking-wide subpixel-antialiased mb-6 mt-10 text-center headtext"
+              >
+                Say <span
+                  className="box-decoration-clone bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-2 py-1"> anything</span> Anonymously
+              </div>
 
-              <button
-                  className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white font-bold py-2 px-4 rounded-md mt-4 hover:bg-indigo-600 hover:to-blue-600 transition ease-in-out duration-150"
-                  type="submit">Submit
-              </button>
-            </form>
+              <div className="sm:flex justify-center sm:gap-5 mt-20">
+                <div
+                    className="block rounded-lg p-6 text-surface shadow-secondary-1 bg-neutral-900 dark:text-white max-w-80">
+                  <h5 className="mb-2 text-xl leading-tight font-bold">Anonymously</h5>
+                  <p className="mb-4 text-base">
+                    Send any messages anonymously, no one knows you lol.
+                  </p>
+                </div>
+                <div
+                    className="block rounded-lg p-6 text-surface shadow-secondary-1 bg-neutral-900 dark:text-white max-w-80">
+                  <h5 className="mb-2 text-xl leading-tight font-bold">Private</h5>
+                  <p className="mb-4 text-base">
+                    Only you can see the messages.
+                  </p>
+                </div>
 
+              </div>
+
+              <div
+                  className="mt-10 flex justify-center items-center"
+              >
+                <button
+                    className="flex bg-green-500 hover:bg-green-400 text-black font-bold py-3 px-6 rounded-full shadow-lg shadow-neutral-950 hover:text-white transform transition-all duration-500 ease-in-out hover:scale-110 hover:brightness-110 hover:animate-pulse"
+                    onClick={() => setIsRegistering(true)}
+                >
+                  Get started
+                </button>
+              </div>
+
+              <div className="mt-10">
+                {isRegistering ? (
+                    <RegisterForm />
+                ) : ("")}
+              </div>
+
+            </div>
+            {/*<Grbf />*/}
           </div>
+        </>
+    );
 
-          <ToastContainer
-              position="top-center"
-              autoClose={2000}
-              hideProgressBar
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover={false}
-              theme="dark"
-          />
-
-          <p className={"mt-5 font-poppins"} style={{fontFamily: "Kalam"}}>
-            Made by Izuye
-          </p>
-
-          <div
-              className="text-black font-bold text-4xl tracking-wide subpixel-antialiased mb-6 mt-10 headtext"
-          >
-            Recent Messages
-          </div>
-
-          <div
-              className="container mx-auto bg-slate-400 p-6 rounded-lg shadow-lg max-w-md mt-2"
-              style={style_boxMenfessData}
-          >
-            {/*{!loading && <MenfessBox data={fessData}/>}*/}
-          </div>
-          {/*<Grbf />*/}
-        </div>
-      </>
-  );
 }
