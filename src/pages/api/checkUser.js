@@ -20,6 +20,7 @@ import { ref, get } from "firebase/database";
 
 export default async (req, res) => {
     const { sid } = req.body;
+    console.log(req.body)
     if (!sid) return res.status(200).json({ status: false, message: "What?" });
 
     try {

@@ -1,17 +1,19 @@
-import pool from '../../../lib/mysql';
+import {get, ref} from "firebase/database";
+import database from "@/firebase";
 
 export default async (req, res) => {
+    const { sid } = req.body;
+    if (!sid) return res.status(200).json({ status: false, message: "What?" });
     try {
-        const { SecretCode } = req.body;
-        // console.log(SecretCode)
-        const tableName = `_${SecretCode}`;
-        const [rows, fields] = await pool.execute(`SELECT * FROM ${tableName}`);
-        res.status(200).json({data: rows.reverse(), status: true});
-    } catch (error) {
-        if (error.code === 'ER_NO_SUCH_TABLE') {
-            res.status(200).json({ status: false });
-        } else {
-            res.status(200).json({ status: false });
+        const refs = ref(database, 'users');
+        const snapshot = await get(refs);
+        const users = snapshot.val();
+        if (!users || !users[sid]) {
+            return res.status(200).json({ status: false, message: "User not found" });
         }
+        console.log(users[sid].pesan);
+        return res.status(200).json({ status: true, data: users[sid].pesan});
+    } catch (e) {
+        console.log(e);
     }
 };
