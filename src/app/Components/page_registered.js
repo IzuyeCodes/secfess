@@ -11,7 +11,7 @@ const style_mainContainer = {
 };
 
 const registeredPage = ({ data }) => {
-    console.log(data)
+    // console.log(data)
     const [msgData, setMsgData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -25,13 +25,13 @@ const registeredPage = ({ data }) => {
 
         if (response.data.status == true) {
             setMsgData(response.data.data)
-            console.log(msgData)
+            // console.log(msgData)
         }
     }
 
     useEffect( () => {
         getMsgData()
-    })
+    }, [])
 
     return (
         <div
@@ -92,6 +92,7 @@ const registeredPage = ({ data }) => {
                     Recent Messages
                 </h1>
 
+                {msgData ? (
                 <div className='sm:flex justify-center sm:gap-5'>
                     {Object.keys(msgData).map(key => (
                         <div key={key} className="block rounded-lg p-6 text-surface shadow-secondary-1 bg-neutral-900 dark:text-white max-w-80 min-w-80">
@@ -99,50 +100,11 @@ const registeredPage = ({ data }) => {
                             <p className="mb-4 text-base">
                                 {msgData[key].pesan}
                             </p>
+                            <p className={"mt-1 font-light text-sm"}>{msgData[key].created_at}</p>
                         </div>
                     ))}
                 </div>
-
-                {/*<h2*/}
-                {/*    className="text-white font-bold font-poppins text-3xl mb-4 pt-4 text-center message-head"*/}
-                {/*>*/}
-                {/*    Recent Messages*/}
-                {/*</h2>*/}
-                {/*<div className="max-h-screen overflow-y-auto custom-scrollbar">*/}
-                {/*    {loading ? (*/}
-                {/*        // Skeleton loading effect*/}
-                {/*        <div className="skeleton-loading">*/}
-                {/*            <div className="skeleton-line"></div>*/}
-                {/*            <div className="skeleton-line"></div>*/}
-                {/*            <div className="skeleton-line"></div>*/}
-                {/*        </div>*/}
-                {/*    ) : (*/}
-                {/*        // Display data when not loading*/}
-                {/*        menfessData.map((item, index) => (*/}
-                {/*            <div*/}
-                {/*                key={index}*/}
-                {/*                className="mb-4 p-4 message-lists"*/}
-                {/*            >*/}
-                {/*                <div className="flex items-center">*/}
-                {/*                    <div className="w-14 h-14 relative">*/}
-                {/*                        <Image*/}
-                {/*                            src="/anony.png"*/}
-                {/*                            alt="Anonymous profile picture"*/}
-                {/*                            layout="fill"*/}
-                {/*                            objectFit="cover"*/}
-                {/*                        />*/}
-                {/*                    </div>*/}
-                {/*                    <div className="flex-1 ml-4">*/}
-                {/*                        <p className="font-bold message-from">{item.nama}</p>*/}
-                {/*                        <p className="font-medium">{item.pesan}</p>*/}
-                {/*                        <p className="font-mono" style={footerStyle}>*/}
-                {/*                            {item.waktu}*/}
-                {/*                        </p>*/}
-                {/*                    </div>*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
-                {/*        ))*/}
-                {/*    )} </div>*/}
+                    ): (<p>No Messages :(</p>)}
             </motion.div>
 
         </div>

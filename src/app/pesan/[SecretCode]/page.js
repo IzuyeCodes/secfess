@@ -27,7 +27,7 @@ export default function Home({ params: SecretCode }) {
 
     useEffect(() => {
         checkCode()
-    });
+    }, []);
 
     const checkCode = async () => {
         try {
