@@ -21,10 +21,7 @@ export default function Home() {
   const [fessData, setFessData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isRegistering, setIsRegistering] = useState(false)
-
   const [isRegistered, setIsRegistered] = useState(false)
-  console.log(isRegistered)
-  // localStorage.setItem("sid" , "123")
 
   const resetForm = () => {
     setNama("");
