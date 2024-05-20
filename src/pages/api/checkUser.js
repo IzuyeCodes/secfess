@@ -30,8 +30,8 @@ export default async (req, res) => {
         if (!users || !users[sid]) {
             return res.status(200).json({ status: false, message: "User not found" });
         }
-        console.log(users[sid]);
-        return res.status(200).json({ status: true, data: users[sid]});
+        // console.log(users[sid]);
+        return res.status(200).json({ status: true, data: {name: users[sid].name, sid: users[sid].sid}});
     } catch (e) {
         console.log(e);
     }

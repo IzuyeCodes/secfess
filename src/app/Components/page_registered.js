@@ -1,6 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import axios from "axios";
+import msg from "@/pages/msg";
 
 const style_mainContainer = {
     backgroundColor: "black",
@@ -8,8 +10,26 @@ const style_mainContainer = {
 
 const registeredPage = ({ data }) => {
     console.log(data)
-    const [menfessData, setMenfessData] = useState([]);
+    const [msgData, setMsgData] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    // console.log(pesan)
+    const SID = data.sid;
+
+    const getMsgData = async () => {
+        const response = await axios.post(`${window.location.origin}/api/getMsg`, {
+            sid: SID
+        });
+
+        if (response.data.status == true) {
+            setMsgData(response.data.data)
+            console.log(msgData)
+        }
+    }
+
+    useEffect( () => {
+        getMsgData()
+    }, [])
 
     return (
         <div
@@ -71,21 +91,14 @@ const registeredPage = ({ data }) => {
                 </h1>
 
                 <div className='sm:flex justify-center sm:gap-5'>
-                    <div
-                        className="block rounded-lg p-6 text-surface shadow-secondary-1 bg-neutral-900 dark:text-white max-w-80">
-                        <h5 className="mb-2 text-xl leading-tight font-bold">Ania</h5>
-                        <p className="mb-4 text-base">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, illo!
-                        </p>
-                    </div>
-
-                    <div
-                        className="block rounded-lg p-6 text-surface shadow-secondary-1 bg-neutral-900 dark:text-white max-w-80">
-                        <h5 className="mb-2 text-xl leading-tight font-bold">Private</h5>
-                        <p className="mb-4 text-base">
-                            Only you can see the messages.
-                        </p>
-                    </div>
+                    {Object.keys(msgData).map(key => (
+                        <div key={key} className="block rounded-lg p-6 text-surface shadow-secondary-1 bg-neutral-900 dark:text-white max-w-80 min-w-80">
+                            <h5 className="mb-2 text-xl leading-tight font-bold">{msgData[key].nama}</h5>
+                            <p className="mb-4 text-base">
+                                {msgData[key].pesan}
+                            </p>
+                        </div>
+                    ))}
                 </div>
 
                 {/*<h2*/}

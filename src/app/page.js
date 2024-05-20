@@ -64,7 +64,7 @@ export default function Home() {
   // localStorage.setItem("sid", "keke");
   const checkRegistered = async () => {
     const SID = localStorage.getItem("sid" || null)
-    console.log(SID)
+    // console.log(SID)
     if (SID != null) {
       try {
         const res = await axios.post(`${window.location.href}/api/checkUser`, {
