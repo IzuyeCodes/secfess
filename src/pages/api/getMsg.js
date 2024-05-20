@@ -12,7 +12,7 @@ export default async (req, res) => {
         if (!users || !users[sid]) {
             return res.status(200).json({ status: false, message: "User not found" });
         }
-        console.log(users[sid].pesan);
+        // console.log(users[sid].pesan);
         return res.status(200).json({ status: true, data: users[sid].pesan});
     } catch (e) {
         console.log(e);

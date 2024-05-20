@@ -15,7 +15,7 @@ const registeredPage = ({ data }) => {
     const [msgData, setMsgData] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // console.log(pesan)
+    // console.log(m)
     const SID = data.sid;
 
     const getMsgData = async () => {
@@ -73,7 +73,7 @@ const registeredPage = ({ data }) => {
                            className="bg-gray-100 text-gray-800 border-0 rounded-md p-2 mb-4 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-blue-500 transition ease-in-out duration-150"
                            type="text"
                            readOnly={true}
-                           value={window.origin + "/pesan/" + data.sid}
+                           value={window.origin + "/m/" + data.sid}
                     />
                 </div>
                 <div className="flex flex-col items-center">

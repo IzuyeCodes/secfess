@@ -22,6 +22,7 @@ export default function Home({ params: SecretCode }) {
     const [isExist, setIsExist] = useState(false);
     const [SID, setSID] = useState(null);
     const [sent, setSent] = useState(false)
+    const [username, setUsername] = useState("")
 
     const sid = SecretCode.SecretCode;
 
@@ -39,7 +40,8 @@ export default function Home({ params: SecretCode }) {
                 setIsExist(true)
                 setSID(SecretCode.SecretCode)
                 setLoading(false)
-                console.log('all ok')
+                setUsername(response.data.data.name)
+                // console.log('all ok')
                 return true;
             } else{
                 return false;
@@ -141,7 +143,7 @@ export default function Home({ params: SecretCode }) {
                     <div
                         className="text-black font-bold text-4xl tracking-wide subpixel-antialiased mb-6 mt-10 headtext"
                     >
-                        Say <span style={{backgroundColor: "#00ff62", color: "black"}}> anything</span> to me
+                        Say <span style={{backgroundColor: "#00ff62", color: "black"}}> anything</span> to {username}
                     </div>
 
                     <div
