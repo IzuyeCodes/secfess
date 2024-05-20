@@ -1,5 +1,6 @@
 import {get, ref} from "firebase/database";
 import database from "@/firebase";
+/* eslint-disable import/no-anonymous-default-export */
 
 export default async (req, res) => {
     const { sid } = req.body;

@@ -1,5 +1,5 @@
 "use client";
-
+/* eslint-disable import/no-anonymous-default-export */
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -27,7 +27,7 @@ export default function Home({ params: SecretCode }) {
 
     useEffect(() => {
         checkCode()
-    }, []);
+    });
 
     const checkCode = async () => {
         try {

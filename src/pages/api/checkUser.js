@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 import pool from '../../../lib/mysql';
 import database from "@/firebase";
 import { ref, get } from "firebase/database";
