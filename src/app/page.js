@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from 'next/router';
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -47,7 +46,6 @@ export default function Home() {
 
       resetForm();
       toast.success("Pesan terkirim!");
-      router.reload();
     } catch (error) {
       console.error("Terjadi kesalahan:", error.message);
       toast.error("Terjadi kesalahan. Silakan coba lagi.");

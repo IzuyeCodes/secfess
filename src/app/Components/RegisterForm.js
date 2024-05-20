@@ -1,5 +1,6 @@
 import {useState} from "react";
 import axios from "axios";
+import { useRouter } from 'next/router';
 
 const style_boxForms = {
     borderRadius: "20px",
@@ -22,6 +23,7 @@ export default function RegisterForm() {
             if(res.data){
                 localStorage.setItem("sid", res.data.sid)
                 setRegisterProcess(false)
+                router.reload();
             }
 
         } catch (err) {

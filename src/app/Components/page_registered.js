@@ -104,7 +104,7 @@ const registeredPage = ({ data }) => {
                         </div>
                     ))}
                 </div>
-                    ): (<p>No Messages :(</p>)}
+                    ): (<p className="mt-3 font-normal text-white text-center">No Messages :(</p>)}
             </motion.div>
 
         </div>
